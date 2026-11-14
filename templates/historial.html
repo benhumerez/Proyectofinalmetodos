@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block cuerpo %}
+<h2>Historial de experimentos</h2>
+<form method="get"><input name="q" value="{{ q }}" placeholder="buscar por caso, escenario, equipo o #id"> <button>Buscar</button></form>
+<table><tr><th>#</th><th>Fecha</th><th>Caso</th><th>Escenario</th><th>Métodos</th><th>Estado</th><th></th></tr>
+{% for f in filas %}<tr><td>{{ f.id }}</td><td>{{ f.fecha }}</td><td>{{ f.caso }}</td><td>{{ etq[f.tipo] }}</td><td>{{ f.n_metodos }}</td><td>{{ f.estado }}</td>
+<td><a href="{{ url_for('simulacion', sim_id=f.id) }}">abrir</a></td></tr>
+{% else %}<tr><td colspan="7">Sin simulaciones guardadas.</td></tr>{% endfor %}</table>{% endblock %}

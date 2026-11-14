@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block cuerpo %}
+<h2>{{ caso.icono }} Módulo {{ caso.id }} · {{ caso.nombre }}</h2>
+<p>{{ caso.pregunta }}</p>
+<div class="box"><b>Modelo:</b> {{ caso.modelo }}<br><span class="nota">Métodos previstos (semana 2): {{ caso.metodos_sem2 }}</span></div>
+<div class="tabs">{% for t in tipos %}<a class="{{ 'on' if t==tipo }}" href="{{ url_for('modulo', clave=clave, esc=t) }}">{{ etq[t] }}</a>{% endfor %}</div>
+{% for e in errores %}<div class="err">{{ e }}</div>{% endfor %}
+{% if nota %}<p class="nota"><b>Subexperimento numérico:</b> {{ nota }}</p>{% endif %}
+<form method="post" action="{{ url_for('ejecutar', clave=clave) }}" class="box">
+ <input type="hidden" name="tipo" value="{{ tipo }}">
+ {% for k,v in valores.items() %}
+  <label>{{ k }} <span class="nota">[{{ unidades.get(k,'') }}]</span></label>
+  <input name="{{ k }}" value="{{ v }}" required>
+ {% endfor %}
+ {% if clave=='deterioro' %}
+  <label>tolerancia (iterativos)</label><input name="tol" value="1e-10">
+  <label>máx. iteraciones</label><input name="max_iter" value="5000">
+  <label>n del sistema lineal (opcional)</label><input name="n" value="">
+ {% endif %}
+ <label>equipo/usuario (opcional)</label><input name="equipo">
+ <p class="nota">Fuente de parámetros: datos sintéticos / supuestos (uso educativo).</p>
+ <button>Ejecutar y guardar</button>
+</form>{% endblock %}

@@ -1,0 +1,15 @@
+{
+  "caso": "detencion",
+  "escenario": "MAL_CONDICIONADO",
+  "parametros": {
+    "v0": 5.0,
+    "T": 4.0,
+    "eps": 1e-09
+  },
+  "unidades": {
+    "v0": "m/s",
+    "a": "m/s²",
+    "t_reac": "s"
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% block cuerpo %}
+<h2>Simulación #{{ sim.id }} · {{ sim.caso }} · {{ etq[sim.tipo] }}</h2>
+<p class="nota">{{ sim.fecha }} · estado {{ sim.estado }}{% if sim.usuario_equipo %} · {{ sim.usuario_equipo }}{% endif %} · {{ sim.fuente_datos }}</p>
+{% if comparacion is not none %}
+<div class="box"><b>Relanzamiento de #{{ vs }}: verificación de coincidencia (tol. 1e-12)</b>
+<table><tr><th>Método</th><th>max|Δx|</th><th>Iter. original</th><th>Iter. nueva</th><th>¿Coincide?</th></tr>
+{% for c in comparacion %}<tr><td>{{ c.metodo }}</td><td>{{ c.dif|e }}</td><td>{{ c.it_a }}</td><td>{{ c.it_b }}</td>
+<td class="{{ 'ok' if c.ok else 'mal' }}">{{ 'Sí' if c.ok else 'No' }}</td></tr>{% endfor %}</table></div>{% endif %}
+<div class="box"><b>Parámetros</b>
+<table><tr>{% for k,v in sim.params.items() if k not in ('sistema','diagnostico','nota') %}<th>{{ k }}</th>{% endfor %}</tr>
+<tr>{% for k,v in sim.params.items() if k not in ('sistema','diagnostico','nota') %}<td>{{ v|g }}</td>{% endfor %}</tr></table>
+{% if sim.params.sistema %}<p class="nota">Sistema lineal: {{ sim.params.sistema.descripcion }} · tol={{ sim.params.sistema.tol }} · max_iter={{ sim.params.sistema.max_iter }}</p>{% endif %}
+{% if sim.params.diagnostico %}{% set d=sim.params.diagnostico %}
+<p class="nota">κ₂(A)={{ d.kappa2|g }} · SPD={{ d.spd }} · diag. dominante estricta={{ d.dd_estricta }} · ρ(T_J)={{ d.rho_jacobi|g }} · ρ(T_GS)={{ d.rho_gs|g }}</p>{% endif %}</div>
+<h3>Resultados por método</h3>
+<table><tr><th>Método</th><th>¿Convergió?</th><th>Iter.</th><th>Error rel. final</th><th>Residual final</th><th>Tiempo [ms]</th></tr>
+{% for e in sim.ejecuciones %}{% set last = e.iteraciones[-1] if e.iteraciones else none %}
+<tr><td>{{ e.metodo }}</td><td class="{{ 'ok' if e.convergio else 'mal' }}">{{ 'Sí' if e.convergio else 'No' }}</td>
+<td>{{ last.numero if last else '—' }}</td><td>{{ last.error_rel|e if last else '—' }}</td><td>{{ last.residual|e if last else '—' }}</td><td>{{ e.tiempo_ms|g }}</td></tr>{% endfor %}</table>
+<div class="box">
+{% for e in sim.ejecuciones if e.resumen.valor and not e.iteraciones %}
+ <p><b>{{ e.metodo }}</b> — {{ e.resumen.referencia }}<br>
+ {% for k,v in e.resumen.valor.items() %}{{ k }} = {{ v|g }}{{ ', ' if not loop.last }}{% endfor %}
+ {% if e.resumen.metricas %}<br><span class="nota">{% for k,v in e.resumen.metricas.items() %}{{ k }} = {{ v|g }}{{ ' · ' if not loop.last }}{% endfor %}</span>{% endif %}</p>
+{% endfor %}</div>
+<h3>Gráficos (regenerados desde la BD)</h3>
+<img src="{{ url_for('grafico', sim_id=sim.id, tipo='curva') }}" alt="curva">
+{% if sim.caso_clave=='deterioro' %}<img src="{{ url_for('grafico', sim_id=sim.id, tipo='convergencia') }}" alt="convergencia">{% endif %}
+<h3>Interpretación</h3>
+<div class="box"><b>Conclusión matemática (métodos)</b><ul>
+{% for e in sim.ejecuciones if e.resumen.interpretacion and e.iteraciones %}<li><b>{{ e.metodo }}:</b> {{ e.resumen.interpretacion }}</li>{% endfor %}
+{% for e in sim.ejecuciones if e.resumen.interpretacion and not e.iteraciones %}{% if sim.caso_clave!='deterioro' %}<li>{{ e.resumen.interpretacion }}</li>{% endif %}{% endfor %}</ul></div>
+<div class="box"><b>Conclusión del problema (caso)</b><ul>
+{% for e in sim.ejecuciones if e.resumen.interpretacion and not e.iteraciones and sim.caso_clave=='deterioro' %}<li>{{ e.resumen.interpretacion }}</li>{% endfor %}
+<li class="nota">Borrador de la semana 1: la interpretación completa (qué variables influyen y qué no puede inferirse) se redacta en la semana 3.</li></ul></div>
+<form method="post" action="{{ url_for('relanzar', sim_id=sim.id) }}"><button>Relanzar esta simulación y comparar</button></form>
+<p><a href="{{ url_for('modulo', clave=sim.caso_clave, esc=sim.tipo) }}">← volver al módulo</a> · <a href="{{ url_for('historial') }}">historial</a></p>
+{% endblock %}

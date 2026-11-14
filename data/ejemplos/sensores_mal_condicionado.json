@@ -1,0 +1,16 @@
+{
+  "caso": "sensores",
+  "escenario": "MAL_CONDICIONADO",
+  "parametros": {
+    "n_nodos": 20,
+    "a": 0.0,
+    "b": 10.0,
+    "ruido": 0.0
+  },
+  "unidades": {
+    "n_nodos": "puntos",
+    "intervalo": "s",
+    "ruido": "adim."
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

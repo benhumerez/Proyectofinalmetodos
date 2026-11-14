@@ -1,0 +1,30 @@
+digraph DER {
+  rankdir=LR; nodesep=0.5; ranksep=0.7; bgcolor="white";
+  node [shape=plain, fontname="DejaVu Sans", fontsize=10];
+  edge [fontname="DejaVu Sans", fontsize=9, arrowhead=crow, arrowtail=tee, dir=both, color="#12355b"];
+
+  caso_estudio [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>caso_estudio</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>nombre (UNIQUE)<br align="left"/>modelo_version<br align="left"/></td></tr></table>>];
+  escenario [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>escenario</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>caso_id (FK)<br align="left"/>tipo {NORMAL|ESTRES|MAL_COND.}<br align="left"/>parametros_json<br align="left"/>fuente_datos<br align="left"/></td></tr></table>>];
+  simulacion [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>simulacion</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>escenario_id (FK)<br align="left"/>fecha<br align="left"/>usuario_equipo (opc.)<br align="left"/>estado<br align="left"/></td></tr></table>>];
+  ejecucion_metodo [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>ejecucion_metodo</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>simulacion_id (FK)<br align="left"/>metodo<br align="left"/>tolerancia, paso, max_iter<br align="left"/>convergio, tiempo_ms<br align="left"/></td></tr></table>>];
+  iteracion_resultado [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>iteracion_resultado</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>ejecucion_id (FK)<br align="left"/>numero<br align="left"/>aproximacion_json<br align="left"/>residual, error_abs, error_rel<br align="left"/></td></tr></table>>];
+  resultado_resumen [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#12355b"><font color="white"><b>resultado_resumen</b></font></td></tr>
+    <tr><td align="left"><u>id</u> (PK)<br align="left"/>ejecucion_id (FK, UNIQUE)<br align="left"/>referencia<br align="left"/>valor_json<br align="left"/>metrica_error_json<br align="left"/>interpretacion<br align="left"/></td></tr></table>>];
+
+  caso_estudio -> escenario [taillabel="1", headlabel="N", label="define"];
+  escenario -> simulacion [taillabel="1", headlabel="N", label="origina"];
+  simulacion -> ejecucion_metodo [taillabel="1", headlabel="N", label="ejecuta"];
+  ejecucion_metodo -> iteracion_resultado [taillabel="1", headlabel="N", label="registra"];
+  ejecucion_metodo -> resultado_resumen [taillabel="1", headlabel="1", label="resume", arrowhead=tee];
+}

@@ -1,0 +1,15 @@
+{
+  "caso": "detencion",
+  "escenario": "ESTRES",
+  "parametros": {
+    "v0": 6.0,
+    "a": 0.6,
+    "t_reac": 1.5
+  },
+  "unidades": {
+    "v0": "m/s",
+    "a": "m/s²",
+    "t_reac": "s"
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

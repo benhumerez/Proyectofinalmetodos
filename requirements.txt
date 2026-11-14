@@ -1,0 +1,6 @@
+flask>=3.0
+numpy>=1.26
+matplotlib>=3.8
+pytest>=8.0        # pruebas
+reportlab>=4.0     # solo para regenerar docs/Semana1_Avance_SIMTELE-RISK.pdf
+pillow>=10.0       # idem

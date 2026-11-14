@@ -1,0 +1,19 @@
+{
+  "caso": "oscilaciones",
+  "escenario": "ESTRES",
+  "parametros": {
+    "m": 3000.0,
+    "k": 50000.0,
+    "zeta": 0.02,
+    "F0": 1500.0,
+    "r": 0.95
+  },
+  "unidades": {
+    "m": "kg",
+    "k": "N/m",
+    "zeta": "adim.",
+    "F0": "N",
+    "r": "Ω/ω0 (adim.)"
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

@@ -1,0 +1,16 @@
+@startuml
+' Pegar en https://www.planttext.com/
+hide circle
+skinparam linetype ortho
+entity caso_estudio { * id : int <<PK>> \n-- \n nombre : text \n modelo_version : text }
+entity escenario { * id : int <<PK>> \n-- \n caso_id : int <<FK>> \n tipo : NORMAL|ESTRES|MAL_CONDICIONADO \n parametros_json \n fuente_datos }
+entity simulacion { * id : int <<PK>> \n-- \n escenario_id : int <<FK>> \n fecha \n usuario_equipo \n estado }
+entity ejecucion_metodo { * id : int <<PK>> \n-- \n simulacion_id : int <<FK>> \n metodo \n tolerancia \n paso \n max_iter \n convergio \n tiempo_ms }
+entity iteracion_resultado { * id : int <<PK>> \n-- \n ejecucion_id : int <<FK>> \n numero \n aproximacion_json \n residual \n error_abs \n error_rel }
+entity resultado_resumen { * id : int <<PK>> \n-- \n ejecucion_id : int <<FK,UQ>> \n referencia \n valor_json \n metrica_error_json \n interpretacion }
+caso_estudio ||--o{ escenario
+escenario ||--o{ simulacion
+simulacion ||--o{ ejecucion_metodo
+ejecucion_metodo ||--o{ iteracion_resultado
+ejecucion_metodo ||--o| resultado_resumen
+@enduml

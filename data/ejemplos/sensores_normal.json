@@ -1,0 +1,16 @@
+{
+  "caso": "sensores",
+  "escenario": "NORMAL",
+  "parametros": {
+    "n_nodos": 6,
+    "a": 0.0,
+    "b": 6.283185307179586,
+    "ruido": 0.0
+  },
+  "unidades": {
+    "n_nodos": "puntos",
+    "intervalo": "s",
+    "ruido": "adim."
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

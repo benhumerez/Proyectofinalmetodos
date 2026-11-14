@@ -1,0 +1,17 @@
+{
+  "caso": "deterioro",
+  "escenario": "NORMAL",
+  "parametros": {
+    "D0": 0.1,
+    "alfa": 0.004,
+    "beta": 5e-05,
+    "D_umbral": 0.6
+  },
+  "unidades": {
+    "D0": "adim.",
+    "alfa": "1/mes",
+    "beta": "1/mes²",
+    "D_umbral": "adim."
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

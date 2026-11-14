@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block cuerpo %}
+<h2>Casos de estudio</h2>
+<p class="nota">Sistema de transporte por cable inspirado en Mi Teleférico (La Paz). Escenarios hipotéticos; no describen fallas verificadas.</p>
+<div class="cards">
+{% for k,c in casos.items() %}
+ <a class="card" href="{{ url_for('modulo', clave=k) }}"><div class="ic">{{ c.icono }}</div>
+ <h3>{{ c.nombre }}</h3><p class="nota">{{ c.pregunta }}</p></a>
+{% endfor %}</div>{% endblock %}

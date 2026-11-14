@@ -1,0 +1,19 @@
+{
+  "caso": "oscilaciones",
+  "escenario": "NORMAL",
+  "parametros": {
+    "m": 3000.0,
+    "k": 50000.0,
+    "zeta": 0.1,
+    "F0": 500.0,
+    "r": 0.5
+  },
+  "unidades": {
+    "m": "kg",
+    "k": "N/m",
+    "zeta": "adim.",
+    "F0": "N",
+    "r": "Ω/ω0 (adim.)"
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}

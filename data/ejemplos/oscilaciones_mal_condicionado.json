@@ -1,0 +1,21 @@
+{
+  "caso": "oscilaciones",
+  "escenario": "MAL_CONDICIONADO",
+  "parametros": {
+    "m": 3000.0,
+    "k": 50000.0,
+    "zeta": 0.999,
+    "F0": 0.0,
+    "r": 0.0,
+    "x0": 0.1,
+    "v0": 0.05
+  },
+  "unidades": {
+    "m": "kg",
+    "k": "N/m",
+    "zeta": "adim.",
+    "F0": "N",
+    "r": "Ω/ω0 (adim.)"
+  },
+  "fuente": "Datos sintéticos / parámetros supuestos (uso educativo)"
+}
